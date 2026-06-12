@@ -1,0 +1,75 @@
+version: '3'
+
+dotenv: [".env"]
+
+tasks:
+# Task
+  hello:
+    desc: Sample task
+    cmds:
+      - echo "Hello from task"
+    silent: true
+  list:
+    desc: List all tasks
+    cmds:
+    - task --list
+    silent: true
+# Terraform
+  apply:
+    desc: Apply Terraform (needs planning first)
+    cmds:
+    - task: tf_apply
+    preconditions:
+      - test -f tfplan 
+    silent: true
+  plan:
+    desc: Plan Terraform
+    cmds:
+    - task: tf_fmt
+    - task: tf_lint
+    - task: tf_init
+    - task: tf_plan
+
+# Internal
+  tf_apply:
+    desc: Apply Terraform
+    dir: Homelab
+    cmds:
+    - terraform apply tfplan
+    silent: true
+    internal: true
+  tf_fmt:
+    desc: Format Terraform
+    dir: Homelab
+    cmds:
+    - terraform fmt --recursive
+    silent: true
+    internal: true
+  tf_init:
+    desc: Initialise Terraform
+    dir: Homelab
+    cmds:
+    - terraform init -upgrade
+    env:
+      TF_TOKEN_app_terraform_io: "{{.TF_TOKEN_app_terraform_io}}"
+    requires:
+      vars: [ TF_TOKEN_app_terraform_io ]
+    silent: true
+    internal: true
+  tf_lint:
+    desc: Run tflint
+    dir: Homelab
+    cmds:
+    - tflint
+    silent: true
+    internal: true
+  tf_plan:
+    desc: Plan Terraform
+    dir: Homelab
+    cmds:
+    - terraform plan -out tfplan -input=false
+    env:
+      TF_TOKEN_app_terraform_io: "{{.TF_TOKEN_app_terraform_io}}"
+    requires:
+      vars: [ TF_TOKEN_app_terraform_io ]
+    internal: true
