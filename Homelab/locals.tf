@@ -48,28 +48,6 @@ locals {
       variable_groups = ["ansible", "letsencrypt"]
     },
     {
-      name            = "deploy-docker"
-      folder          = "\\Databases"
-      repository      = "databases"
-      repo_type       = "TfsGit"
-      branch          = "main"
-      path            = ".azuredevops/pipelines/deploy-docker.yml"
-      environments    = []
-      pools           = []
-      variable_groups = ["databases"]
-    },
-    {
-      name            = "destroy-docker"
-      folder          = "\\Databases"
-      repository      = "databases"
-      repo_type       = "TfsGit"
-      branch          = "main"
-      path            = ".azuredevops/pipelines/destroy-docker.yml"
-      environments    = []
-      pools           = []
-      variable_groups = ["databases"]
-    },
-    {
       name            = "manual-role"
       folder          = "\\Deploy"
       repository      = "ansible-lab"
@@ -84,7 +62,7 @@ locals {
       name            = "build-docs"
       folder          = "\\Documentation"
       repository      = "documentation"
-      repo_type       = "TfsGit"
+      repo_type       = "GitHub"
       branch          = "main"
       path            = ".azuredevops/pipelines/build-docs.yml"
       environments    = []
@@ -95,23 +73,12 @@ locals {
       name            = "update-games"
       folder          = "\\Documentation"
       repository      = "documentation"
-      repo_type       = "TfsGit"
+      repo_type       = "GitHub"
       branch          = "main"
       path            = ".azuredevops/pipelines/update-games.yml"
       environments    = []
       pools           = []
       variable_groups = []
-    },
-    {
-      name            = "Destroy Local Cluster"
-      folder          = "\\Kubernetes"
-      repository      = "kubernetes"
-      repo_type       = "TfsGit"
-      branch          = "main"
-      path            = ".azuredevops/pipelines/destroy-local-cluster.yaml"
-      environments    = []
-      pools           = []
-      variable_groups = ["kubernetes"]
     },
     {
       name            = "Pester"
@@ -123,28 +90,6 @@ locals {
       environments    = []
       pools           = []
       variable_groups = []
-    },
-    {
-      name            = "Setup Local Cluster"
-      folder          = "\\Kubernetes"
-      repository      = "kubernetes"
-      repo_type       = "TfsGit"
-      branch          = "main"
-      path            = ".azuredevops/pipelines/setup-local-cluster.yaml"
-      environments    = []
-      pools           = []
-      variable_groups = ["kubernetes"]
-    },
-    {
-      name            = "Setup Remote Cluster"
-      folder          = "\\Kubernetes"
-      repository      = "kubernetes"
-      repo_type       = "TfsGit"
-      branch          = "main"
-      path            = ".azuredevops/pipelines/setup-remote-cluster.yaml"
-      environments    = []
-      pools           = []
-      variable_groups = ["kubernetes"]
     },
     {
       name            = "Test"
@@ -186,28 +131,6 @@ locals {
       repo_type       = "GitHub"
       branch          = "main"
       path            = ".azuredevops/pipelines/netbox-dhcp.yml"
-      environments    = []
-      pools           = []
-      variable_groups = ["ansible"]
-    },
-    {
-      name            = "patch-everything"
-      folder          = "\\Patching"
-      repository      = "ansible"
-      repo_type       = "Bitbucket"
-      branch          = "feature/patching"
-      path            = ".azuredevops/pipelines/patch-everything.yml"
-      environments    = []
-      pools           = []
-      variable_groups = ["ansible"]
-    },
-    {
-      name            = "patch-host"
-      folder          = "\\Patching"
-      repository      = "ansible"
-      repo_type       = "Bitbucket"
-      branch          = "master"
-      path            = ".azuredevops/pipelines/patch.yml"
       environments    = []
       pools           = []
       variable_groups = ["ansible"]
@@ -309,28 +232,6 @@ locals {
       secrets = {
         bitwarden_token = "edc75c89-6795-4302-8362-b467013b615e"
         vault_password  = "84bdfd70-7a2c-45c7-82d4-b469009e4dcb"
-      }
-    }
-    databases = {
-      variables = {}
-      secrets = {
-        db2_instance_password   = "63d5f41f-64d8-49e4-a0a5-b46900a3a46b"
-        dynamodb_password       = "63d5f41f-64d8-49e4-a0a5-b46900a3a46b"
-        mongo_express_password  = "63d5f41f-64d8-49e4-a0a5-b46900a3a46b"
-        mongo_root_password     = "63d5f41f-64d8-49e4-a0a5-b46900a3a46b"
-        oracle_sys_password     = "63d5f41f-64d8-49e4-a0a5-b46900a3a46b"
-        postgres_admin_password = "63d5f41f-64d8-49e4-a0a5-b46900a3a46b"
-        sqlserver_sa_password   = "63d5f41f-64d8-49e4-a0a5-b46900a3a46b"
-      }
-    }
-    kubernetes = {
-      variables = {
-        akeyless_user   = "p-wnjmqutde65aam"
-        kubernetes_host = "lt16"
-        port_list       = "80,443"
-      }
-      secrets = {
-        akeyless_password = "3eebddbc-07a3-45f3-9278-b46900a0271d"
       }
     }
     letsencrypt = {
